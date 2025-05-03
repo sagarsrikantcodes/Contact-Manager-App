@@ -2,7 +2,7 @@
 
 ## Overview
 
-Contact Manager is a web application that enables the user to manage their contacts. The contacts can be created, searched, filtered based on tags, edited, or deleted. Tags can be modified from individual contact details. Contacts can be searched based on the search input by the user or based on the filtering the tags by the user. The contacts are sorted alphabetically based on their full names. 
+Contact Manager is a web application that enables the user to manage their contacts. The contacts can be created, searched based on full name, filtered based on tags, edited, or deleted. Tags can be modified from individual contact details. Contacts can be searched based on the search input by the user or based on the filtering the tags by the user. The contacts are sorted alphabetically based on their full names. 
 
 ## Files
 
@@ -15,7 +15,7 @@ Contact Manager is a web application that enables the user to manage their conta
 - Add contact
 - Edit contact
 - Delete contact
-- Search contacts
+- Search contacts based on full name.
 - Manage tags
 - Filter contacts based on tags.
 
