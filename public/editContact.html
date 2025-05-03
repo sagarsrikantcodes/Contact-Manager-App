@@ -65,11 +65,11 @@
         </div>
         <div>
           <label for="email">Email address:   </label>
-          <input type="text" id="email" name="email" value="{{email}}">
+          <input type="text" id="email" name="email" value="{{email}}" required>
         </div>
         <div>
           <label for="phone_number">Telephone number:   </label>
-          <input type="text" id="phone_number" name="phone_number" value="{{phone_number}}">
+          <input type="text" id="phone_number" name="phone_number" value="{{phone_number}}" required>
         </div>
         <div id="categories">
           <label for="tags">Tags: </label>
@@ -127,33 +127,51 @@
         const tags = [...form.tags.selectedOptions].map(option => option.value);
 
         // Form Validation
-        let errors = [];
+        function validateForm() {
+          // Form Validation
+          let errors = [];
+          const fullNameRegex = /^[A-Za-z]+\s*[A-Za-z]*$/;
+          if (!fullName.match(fullNameRegex)) {
+            errors.push("Enter a valid full name.");
+            document.querySelector("#full_name").style.borderColor = "red";
+          } else {
+            document.querySelector("#full_name").style.borderColor = "green";
+          }
 
-        if (fullName === "") {
-          errors.push("Full Name is required.");
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if (!email.match(emailRegex)) {
+            errors.push("Enter a valid email address.");
+            document.querySelector("#email").style.borderColor = "red";
+          } else {
+            document.querySelector("#email").style.borderColor = "green";
+          }
+
+          const phoneRegex = /^\d{10,15}$/;
+          if (!phoneNumber.match(phoneRegex)) {
+            errors.push("Phone number must be between 10-15 numeric digits only.");
+            document.querySelector("#phone_number").style.borderColor = "red";
+          } else {
+            document.querySelector("#phone_number").style.borderColor = "green";
+          }
+
+          if (tags.length === 0) {
+            errors.push("At least one tag must be selected.");
+          }
+
+          if (errors.length > 0) {
+            errorMessages.innerHTML = errors.join("<br>");
+            return false;
+          } else {
+            errorMessages.innerHTML = "";
+          }
+
+          return true;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          errors.push("Enter a valid email address.");
-        }
-
-        const phoneRegex = /^\d{10,15}$/;
-        if (!phoneRegex.test(phoneNumber)) {
-          errors.push("Phone number must be between 10-15 digits.");
-        }
-
-        if (tags.length === 0) {
-          errors.push("At least one tag must be selected.");
-        }
-
-        if (errors.length > 0) {
-          errorMessages.innerHTML = errors.join("<br>");
+        if (!validateForm()) {
           return;
-        } else {
-          errorMessages.innerHTML = "";
         }
-
+        
         const updatedContact = {
           full_name: fullName,
           email: email,
@@ -190,3 +208,4 @@
     });
   </script>
 </body>
+

@@ -23,15 +23,15 @@
       <form action="/api/contacts/" method="POST">
         <div>
           <label for="full_name">Full name:   </label>
-          <input type="text" id="full_name" name="full_name" required>
+          <input type="text" id="full_name" name="full_name" placeholder="John Doe" required>
         </div>
         <div>
           <label for="email">Email address:   </label>
-          <input type="text" id="email" name="email">
+          <input type="text" id="email" name="email" placeholder="example@domain.com" required>
         </div>
         <div>
           <label for="phone_number">Telephone number:   </label>
-          <input type="text" id="phone_number" name="phone_number">
+          <input type="text" id="phone_number" name="phone_number" required>
         </div>
         <div id="categories">
           <label for="tags">Tags: </label>
@@ -52,6 +52,7 @@
         </div>
       </form>
     </div>
+    <div id="errorMessages" style="color: red;"></div>
   </main>
   <script>
     document.addEventListener("DOMContentLoaded", async event => {
@@ -70,26 +71,46 @@
       }
 
       function validateForm() {
-        const fullName = document.getElementById("full_name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const phoneNumber = document.getElementById("phone_number").value.trim();
+        const fullName = form.full_name.value.trim();
+        const email = form.email.value.trim();
+        const phoneNumber = form.phone_number.value.trim();
+        const tags = [...form.tags.selectedOptions].map(option => option.value);
 
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phonePattern = /^[0-9]{10,15}$/;
-
-        if (!fullName) {
-          alert("Full name is required.");
-          return false;
+        // Form Validation
+        let errors = [];
+        const fullNameRegex = /^[A-Za-z]+\s*[A-Za-z]*$/;
+        if (!fullName.match(fullNameRegex)) {
+          errors.push("Enter a valid full name.");
+          document.querySelector("#full_name").style.borderColor = "red";
+        } else {
+          document.querySelector("#full_name").style.borderColor = "green";
         }
 
-        if (email && !emailPattern.test(email)) {
-          alert("Please enter a valid email address.");
-          return false;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email.match(emailRegex)) {
+          errors.push("Enter a valid email address.");
+          document.querySelector("#email").style.borderColor = "red";
+        } else {
+          document.querySelector("#email").style.borderColor = "green";
         }
 
-        if (phoneNumber && !phonePattern.test(phoneNumber)) {
-          alert("Please enter a valid phone number (10-15 digits).");
+        const phoneRegex = /^\d{10,15}$/;
+        if (!phoneNumber.match(phoneRegex)) {
+          errors.push("Phone number must be between 10-15 numeric digits only.");
+          document.querySelector("#phone_number").style.borderColor = "red";
+        } else {
+          document.querySelector("#phone_number").style.borderColor = "green";
+        }
+
+        if (tags.length === 0) {
+          errors.push("At least one tag must be selected.");
+        }
+
+        if (errors.length > 0) {
+          errorMessages.innerHTML = errors.join("<br>");
           return false;
+        } else {
+          errorMessages.innerHTML = "";
         }
 
         return true;
