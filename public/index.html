@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="stylesheets/autocomplete.css">
+  <!-- <link rel="stylesheet" href="stylesheets/normalize.css"> -->
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/handlebars.js"></script>
+  
+</head>
+<body>
+  <header>
+    <h1>Contact Manager App</h1>
+  </header>
+  <main>
+    <div id="container1">
+      <button type="text"><a href="/createContact.html" id="create_contact_link">Add Contact</a></button>
+      <input type="text" placeholder="Search" id="search_input">
+    </div>
+    <div id="container2">
+      <table id="contactsList">
+        <thead>
+          <tr class="header">
+            <th style="width: 20%">Full Name</th>
+            <th style="width: 20%">Email Address</th>
+            <th style="width: 20%">Telephone Number</th>
+            <th style="width: 20%">Tags
+              <select name="tags" id="tags" multiple>
+                <option value="all" selected>All</option>
+                <option value="work">Work</option>
+                <option value="business">Business</option>
+                <option value="engineering">Engineering</option>
+                <option value="marketing">Marketing</option>
+                <option value="medical">Medical</option>
+                <option value="lawyer">Lawyer</option>
+                <option value="friend">Friend</option>
+                <option value="null">None</option>
+              </select>
+            </th>
+            <th style="width: 20%">Modify List</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--
+          <tr>
+            <td>Raghu Reddy</td>
+            <td>rreddy@example.com</td>
+            <td>(906)-370-1234</td>
+            <td>Engineering</td>
+            <td>
+              <div>
+                <button type="text" id="edit_button">
+                  <i class="fa fa-edit"></i>
+                  Edit
+                </button>
+              </div>
+              <div>
+                <button type="text" id="delete_button">
+                  <i class="fa fa-trash-o"></i>
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Raghu Reddy</td>
+            <td>rreddy@example.com</td>
+            <td>(906)-370-1234</td>
+            <td>Engineering</td>
+            <td>
+              <div>
+                <button type="text" id="edit_button">
+                  <i class="fa fa-edit"></i>
+                  Edit
+                </button>
+              </div>
+              <div>
+                <button type="text" id="delete_button">
+                  <i class="fa fa-trash-o"></i>
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+          -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <script id="contactTemplate" type="text/x-handlebars">
+    <tr>
+      <td>{{full_name}}</td>
+      <td>{{email}}</td>
+      <td>{{phone_number}}</td>
+      <td>{{tags}}</td>
+      <td>
+        <div>
+          <button type="text" class="edit_button" data-id="{{id}}">
+            <i class="fa fa-edit"></i>
+            Edit
+          </button>
+        </div>
+        <div>
+          <button type="text" class="delete_button" data-id="{{id}}">
+            <i class="fa fa-trash-o"></i>
+            Delete
+          </button>
+        </div>
+      </td>
+    </tr>
+  </script>
+  <script id="contactsTemplate" type="text/x-handlebars">
+    {{#each contacts}}
+    {{> contactTemplate}}
+    {{/each}}
+  </script>
+  <script src="/javascripts/contacts.js"></script>
+  <script type="module" src="/javascripts/autocomplete.js"></script>
+</body>
+</html>
+

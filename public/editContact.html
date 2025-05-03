@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/handlebars.js"></script>
+  <script src="/javascripts/contacts.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Contact Manager App</h1>
+  </header>
+  <main>
+    <div id="container1">
+      <h2>Edit Contact</h2>
+    </div>
+    <div id="container3">
+      <!--
+      <form action="/api/contacts/" method="PUT">
+        <div>
+          <label for="full_name">Full name:   </label>
+          <input type="text" id="full_name" name="full_name" required>
+        </div>
+        <div>
+          <label for="email">Email address:   </label>
+          <input type="text" id="email" name="email">
+        </div>
+        <div>
+          <label for="phone_number">Telephone number:   </label>
+          <input type="text" id="phone_number" name="phone_number">
+        </div>
+        <div id="categories">
+          <label for="tags">Tags: </label>
+          <select name="tags" id="tags" multiple>
+            <option value="work">Work</option>
+            <option value="business">Business</option>
+            <option value="engineering">Engineering</option>
+            <option value="marketing">Marketing</option>
+            <option value="medical">Medical</option>
+            <option value="lawyer">Lawyer</option>
+            <option value="friend">Friend</option>
+            <option value="">None</option>
+          </select>
+        </div>
+        <div id="form_buttons">
+          <button type="submit" id="submit_btn">Submit</button>
+          <button type="text" id="cancel_btn">Cancel</button>
+        </div>
+      </form>
+      -->
+    </div>
+    <div id="errorMessages" style="color: red;"></div>
+  </main>
+
+  <script id="editFormTemplate" type="text/x-handlebars">
+    <form action="/api/contacts/{{id}}" method="PUT">
+        <div>
+          <label for="full_name">Full name:   </label>
+          <input type="text" id="full_name" name="full_name" value="{{full_name}}" required>
+        </div>
+        <div>
+          <label for="email">Email address:   </label>
+          <input type="text" id="email" name="email" value="{{email}}">
+        </div>
+        <div>
+          <label for="phone_number">Telephone number:   </label>
+          <input type="text" id="phone_number" name="phone_number" value="{{phone_number}}">
+        </div>
+        <div id="categories">
+          <label for="tags">Tags: </label>
+          <select name="tags" id="tags" multiple>
+            {{#each availableTags}}
+              <option value="{{this}}" {{#if (includes ../selectedTags this)}}selected{{/if}}>{{this}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div id="form_buttons">
+          <button type="submit" id="submit_btn">Submit</button>
+          <button type="text" id="cancel_btn">Cancel</button>
+        </div>
+      </form>
+  </script>
+  <script>
+    Handlebars.registerHelper("includes", function(array, value) {
+      return array.includes(value) ? "selected" : "";
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      // Retrieve the contact data from localStorage
+      const contact = JSON.parse(localStorage.getItem("currentContact"));
+
+      if (!contact) {
+        alert("No contact data found!");
+        window.location.href = "/index.html";
+        return;
+      }
+
+      // Retrieve available tags for the form 
+      const availableTags = ["work", "business", "engineering", "marketing", "medical", "lawyer", "friend"];
+
+      // Add 'selectedTags' property to the contact 
+      contact.availableTags = availableTags;
+      contact.selectedTags = contact.tags.split(",");
+
+      // Compile the Handlebars template 
+      const source = document.querySelector("#editFormTemplate").innerHTML;
+      const template = Handlebars.compile(source);
+
+      // Render the template with contact data 
+      const html = template(contact);
+      document.getElementById("container3").innerHTML = html;
+
+      const form = document.querySelector("form");
+      const errorMessages = document.getElementById("errorMessages");
+
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const fullName = form.full_name.value.trim();
+        const email = form.email.value.trim();
+        const phoneNumber = form.phone_number.value.trim();
+        const tags = [...form.tags.selectedOptions].map(option => option.value);
+
+        // Form Validation
+        let errors = [];
+
+        if (fullName === "") {
+          errors.push("Full Name is required.");
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errors.push("Enter a valid email address.");
+        }
+
+        const phoneRegex = /^\d{10,15}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+          errors.push("Phone number must be between 10-15 digits.");
+        }
+
+        if (tags.length === 0) {
+          errors.push("At least one tag must be selected.");
+        }
+
+        if (errors.length > 0) {
+          errorMessages.innerHTML = errors.join("<br>");
+          return;
+        } else {
+          errorMessages.innerHTML = "";
+        }
+
+        const updatedContact = {
+          full_name: fullName,
+          email: email,
+          phone_number: phoneNumber,
+          tags: tags.join(","),
+        };
+
+        // XMLHttpRequest for Updating contact details 
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", `http://localhost:3000/api/contacts/${contact.id}`);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.addEventListener("load", event => {
+          console.log(xhr.status);
+          if (xhr.status === 201) {
+            alert("Contact updated successfully!");
+            window.location.href = "http://localhost:3000/index.html";
+          } else {
+            alert("Failed to update contact. Please try again.");
+          }
+        });
+
+        xhr.addEventListener("error", event => {
+          alert("An error occurred while updating the contact.");
+        });
+
+        xhr.send(JSON.stringify(updatedContact));
+      });
+
+      document.getElementById("cancel_btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "http://localhost:3000/index.html";
+      });
+    });
+  </script>
+</body>

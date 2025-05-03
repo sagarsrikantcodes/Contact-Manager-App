@@ -1,0 +1,135 @@
+[
+  {
+    "id": 1,
+    "full_name": "Naveed Fida",
+    "email": "nf@example.com",
+    "phone_number": "12345678901",
+    "tags": "work,friend"
+  },
+  {
+    "id": 2,
+    "full_name": "Victor Reyes",
+    "email": "vpr@example.com",
+    "phone_number": "09876543210",
+    "tags": "work,friend"
+  },
+  {
+    "id": 3,
+    "full_name": "Pete Hanson",
+    "email": "ph@example.com",
+    "phone_number": "54321098761",
+    "tags": null
+  },
+  {
+    "full_name": "Scott Miers",
+    "phone_number": "906-370-1234",
+    "email": "samiers@example.com",
+    "tags": "engineering",
+    "id": 4
+  },
+  {
+    "full_name": "Jeffrey Naber",
+    "phone_number": "19063701234",
+    "email": "jbnaber@example.com",
+    "tags": "work",
+    "id": 5
+  },
+  {
+    "full_name": "Raghu Ram",
+    "phone_number": "19063701234",
+    "email": "rram@abc.net",
+    "tags": "work",
+    "id": 6
+  },
+  {
+    "full_name": "Lance Taylor",
+    "phone_number": "19063705689",
+    "email": "lptaylor@example.com",
+    "tags": "engineering",
+    "id": 7
+  },
+  {
+    "full_name": "Samantha ",
+    "phone_number": "19063705647",
+    "email": "samantha@abc.net",
+    "tags": "friend",
+    "id": 8
+  },
+  {
+    "full_name": "Joe Biden",
+    "phone_number": "19063705679",
+    "email": "jbiden@abc.net",
+    "tags": "work,marketing",
+    "id": 9
+  },
+  {
+    "full_name": "Gary Keller",
+    "phone_number": "15876071234",
+    "email": "gkeller@abc.net",
+    "tags": "work,engineering",
+    "id": 10
+  },
+  {
+    "full_name": "Devi Shetty",
+    "phone_number": "13451234567",
+    "email": "dshetty@uwash.edu",
+    "tags": "medical,friend",
+    "id": 12
+  },
+  {
+    "full_name": "Varun S.",
+    "phone_number": "919986234890",
+    "email": "vsalaria@bmsce.ac.in",
+    "tags": "business,engineering",
+    "id": 14
+  },
+  {
+    "full_name": "Ganesh Patil",
+    "phone_number": "462345677899",
+    "email": "gpatil@ford.de",
+    "tags": "work,engineering",
+    "id": 15
+  },
+  {
+    "full_name": "Aman A.",
+    "phone_number": "19063709899",
+    "email": "aman@umich.edu",
+    "tags": "work,engineering",
+    "id": 16
+  },
+  {
+    "full_name": "Arnab G.",
+    "phone_number": "19576755655",
+    "email": "agoswami@abcnews.com",
+    "tags": "work,engineering",
+    "id": 17
+  },
+  {
+    "full_name": "Jim Hackett",
+    "phone_number": "19077892345",
+    "email": "jhackett@hackettlawfirm.com",
+    "tags": "lawyer,friend",
+    "id": 18
+  },
+  {
+    "full_name": "Emily Neumann",
+    "phone_number": "19089089081",
+    "email": "eneumann@reddyneumannlawfirm.com",
+    "tags": "work,lawyer,friend",
+    "id": 19
+  },
+  {
+    "full_name": "Rahul Reddy",
+    "phone_number": "19079079855",
+    "email": "rreddy@reddyneumannlawfirm.com",
+    "tags": "work,lawyer",
+    "id": 20
+  },
+  {
+    "full_name": "Tester",
+    "phone_number": "919988765734",
+    "email": "tester@example.com",
+    "tags": "work,engineering",
+    "id": 21
+  }
+]

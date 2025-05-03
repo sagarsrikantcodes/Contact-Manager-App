@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/handlebars.js"></script>
+  <script src="/javascripts/contacts.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Contact Manager App</h1>
+  </header>
+  <main>
+    <div id="container1">
+      <h2>Create Contact</h2>
+    </div>
+    <div id="container3">
+      <form action="/api/contacts/" method="POST">
+        <div>
+          <label for="full_name">Full name:   </label>
+          <input type="text" id="full_name" name="full_name" required>
+        </div>
+        <div>
+          <label for="email">Email address:   </label>
+          <input type="text" id="email" name="email">
+        </div>
+        <div>
+          <label for="phone_number">Telephone number:   </label>
+          <input type="text" id="phone_number" name="phone_number">
+        </div>
+        <div id="categories">
+          <label for="tags">Tags: </label>
+          <select name="tags" id="tags" multiple>
+            <option value="work">Work</option>
+            <option value="business">Business</option>
+            <option value="engineering">Engineering</option>
+            <option value="marketing">Marketing</option>
+            <option value="medical">Medical</option>
+            <option value="lawyer">Lawyer</option>
+            <option value="friend">Friend</option>
+            <option value="">None</option>
+          </select>
+        </div>
+        <div id="form_buttons">
+          <button type="submit" id="submit_btn">Submit</button>
+          <button type="text" id="cancel_btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script>
+    document.addEventListener("DOMContentLoaded", async event => {
+      function formDataToJson() {
+        let json = {};
+        for (let idx = 0; idx < form.elements.length; idx += 1) {
+          let element = form.elements[idx];
+          if (element.type === "select-multiple") {
+            const selectedValues = Array.from(element.selectedOptions).map(option => option.value);
+            json[element.name] = selectedValues.join(",");
+          } else if (element.type !== "submit") {
+            json[element.name] = element.value;
+          }
+        }
+        return json;
+      }
+
+      function validateForm() {
+        const fullName = document.getElementById("full_name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phoneNumber = document.getElementById("phone_number").value.trim();
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^[0-9]{10,15}$/;
+
+        if (!fullName) {
+          alert("Full name is required.");
+          return false;
+        }
+
+        if (email && !emailPattern.test(email)) {
+          alert("Please enter a valid email address.");
+          return false;
+        }
+
+        if (phoneNumber && !phonePattern.test(phoneNumber)) {
+          alert("Please enter a valid phone number (10-15 digits).");
+          return false;
+        }
+
+        return true;
+      }
+
+      let form = document.querySelector("form");
+      let cancelButton = document.querySelector("#cancel_btn");
+      let DOMAIN = "http://localhost:3000";
+
+      form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        if (!validateForm()) {
+          return;
+        }
+
+        const json = JSON.stringify(formDataToJson());
+        const request = new XMLHttpRequest();
+        request.open("POST", DOMAIN + form.getAttribute("action"));
+        request.setRequestHeader("Content-Type", "application/json");
+        request.addEventListener("load", event => {
+          console.log("Request completed. Status:", request.status);
+          console.log("Response text:", request.responseText);
+          switch(request.status) {
+            case 201: 
+              console.log("Redirecting to the homepage...");
+              const data = JSON.parse(request.response);
+              alert(`Successfully added new contact with id: ${data.id}`);
+              form.reset();
+              // Redirect to the homepage "http://localhost:3000/index.html"
+              window.location.href = DOMAIN + "/index.html";
+              break;
+            case 400: 
+              alert(`Error: Unable to add new contact.`);
+              break;
+            default: 
+              console.error("Unexpected status code:", request.status);
+          }
+        });
+
+        request.send(json);
+      });
+
+      // Attaching click event listener to cancel button 
+      cancelButton.addEventListener("click", event => {
+        event.preventDefault();
+        window.location.href = DOMAIN + "/index.html";
+      });
+
+    });
+  </script>
+</body>

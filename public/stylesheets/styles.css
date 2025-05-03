@@ -1,0 +1,156 @@
+@import url("whitespace-reset.css");
+
+header {
+  display: flex;
+  justify-content: center; /*Center horizontally*/
+  align-items: center; /*Center vertically*/
+  background: purple;
+  height: 50px;
+  margin: 20px;
+}
+
+h1 {
+  
+  color: white;
+}
+
+#container1 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid black;
+  background: lightgray;
+  height: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+button {
+  height: 50px;
+  color: white;
+  border: 1px solid black;
+  background: orange;
+  border-radius: 5px;
+}
+
+#search_input {
+  background-image: url(https://www.w3schools.com/css/searchicon.png);
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  background-color: white;
+}
+
+input {
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+
+#container2 {
+  margin: 20px;
+  border: 1px solid black;
+  background: lightgray;
+}
+
+#container3 {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  border: 1px solid black;
+  background: lightgray;
+}
+
+#contactsList {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+  
+}
+
+#contactsList th, #contactsList td {
+  text-align: center; 
+  padding: 12px;
+  border: 1px solid black;
+}
+
+#contactsList tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#contactsList tr.header, #contactsList tr:hover {
+  background-color: #f1f1f1;
+}
+
+.edit_button {
+  height: 50px;
+  color: white;
+  border: 1px solid black;
+  background-color: orange;
+  border-radius: 5px;
+  margin: 10px;
+  width: 70px;
+}
+
+.delete_button {
+  height: 50px;
+  color: white;
+  border: 1px solid black;
+  background-color: red;
+  border-radius: 5px;
+  margin: 10px;
+  width: 70px;
+}
+
+#container2 div {
+  margin: 10px;
+}
+
+#submit_btn {
+  background: green;
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin: 10px;
+}
+
+#cancel_btn {
+  background: red;
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin: 10px;
+}
+
+form {
+  margin: 10px;
+}
+
+
+label[for="phone_number"] {
+  margin: 22px;
+}
+
+
+label[for="full_name"] {
+  margin: 50px;
+}
+
+label[for="email"] {
+  margin: 38px;
+}
+
+#form_buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+label[for="tags"] {
+  margin: 87px;
+}
+
+#categories {
+  margin: 20px;
+}
